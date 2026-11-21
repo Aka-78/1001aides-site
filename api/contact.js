@@ -2,7 +2,8 @@
 // Variables d'environnement à définir dans Vercel :
 //   RESEND_API_KEY  clé API Resend (fournie par l'intégration Resend du Marketplace Vercel)
 //   CONTACT_TO      adresse qui reçoit les messages (par défaut contact@1001aides.org)
-//   CONTACT_FROM    expéditeur vérifié chez Resend, ex. "Site 1001aides <site@1001aides.org>"
+//   RESEND_EMAIL_DOMAIN  domaine vérifié chez Resend (fourni par l'intégration), ex. 1001aides.org
+//   CONTACT_FROM    facultatif : expéditeur complet, ex. "Site 1001aides <site@1001aides.org>"
 // Sans RESEND_API_KEY, la fonction répond 503 et le site propose l'envoi par la messagerie du visiteur.
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -59,7 +60,8 @@ module.exports = async function handler(req, res) {
       method: "POST",
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        from: process.env.CONTACT_FROM || "Site 1001aides <onboarding@resend.dev>",
+        from: process.env.CONTACT_FROM
+          || (process.env.RESEND_EMAIL_DOMAIN ? `Site 1001aides <site@${process.env.RESEND_EMAIL_DOMAIN}>` : "Site 1001aides <onboarding@resend.dev>"),
         to: [process.env.CONTACT_TO || "contact@1001aides.org"],
         reply_to: d.email,
         subject: `[Site] ${objet} – ${qui}`.slice(0, 200),
