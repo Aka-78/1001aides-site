@@ -132,6 +132,32 @@
   .contact-box p{margin-bottom:6px}
   .ph{background:#FFF0B3;padding:0 4px;border-radius:4px}
 
+
+  /* Formulaire de contact */
+  .contact-grid{align-items:start}
+  .contact-info{margin-top:22px}
+  .contact-info p{margin-bottom:6px}
+  .contact-form{display:flex;flex-direction:column;gap:14px}
+  .contact-form label{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:.95rem}
+  .contact-form label small{font-weight:400;color:var(--muted)}
+  .contact-form input[type=text],.contact-form input[type=email],.contact-form input[type=tel],.contact-form select,.contact-form textarea{font:inherit;font-weight:400;padding:11px 13px;border:1px solid #CFC7B8;border-radius:10px;background:#fff;color:var(--ink);width:100%}
+  .contact-form input:focus,.contact-form select:focus,.contact-form textarea:focus{outline:2px solid var(--water);outline-offset:1px;border-color:var(--water)}
+  .contact-form input[aria-invalid=true],.contact-form textarea[aria-invalid=true]{border-color:#C0392B;background:#FFF6F5}
+  .contact-form .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:560px){.contact-form .row{grid-template-columns:1fr}}
+  .contact-form .row[hidden]{display:none}
+  .contact-form fieldset{border:0;display:flex;flex-wrap:wrap;gap:8px 20px}
+  .contact-form legend{font-weight:600;font-size:.95rem;margin-bottom:6px;width:100%}
+  .contact-form label.radio,.contact-form label.consent{flex-direction:row;align-items:flex-start;gap:8px;font-weight:400}
+  .contact-form label.consent{font-size:.88rem;color:var(--muted)}
+  .contact-form input[type=radio],.contact-form input[type=checkbox]{margin-top:4px;accent-color:var(--water)}
+  .contact-form .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .contact-form button{border:0;cursor:pointer;font:inherit;font-weight:700;align-self:flex-start}
+  .contact-form button[disabled]{opacity:.6;cursor:wait}
+  .form-status{font-weight:600}
+  .form-status.ok{color:#1E7B3A}
+  .form-status.err{color:#C0392B}
+
   footer{background:var(--ink);color:#C9D1D6;padding:36px 0;font-size:.9rem}
   footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
   footer a{color:#fff}
@@ -319,28 +345,123 @@
 </section>
 
 <section id="contact">
-  <div class="wrap two">
+  <div class="wrap two contact-grid">
     <div>
       <span class="eyebrow">Qui sommes-nous</span>
       <h2>1001aides</h2>
-      <p>1001aides est une association créée il y a deux ans, portée par des bénévoles entre la France et l'Afrique occidentale. Notre objectif : apporter aux villages des aides concrètes et durables (eau, agriculture, santé), avec des équipements qu'ils peuvent entretenir eux-mêmes.</p>
+      <p>1001aides est une association loi 1901, déclarée en août 2024 à la préfecture des Yvelines et portée par des bénévoles entre la France et l'Afrique occidentale. Notre objectif : apporter aux villages des aides concrètes et durables (eau, agriculture, santé), avec des équipements qu'ils peuvent entretenir eux-mêmes.</p>
+      <div class="contact-info">
+        <p>✉️ <a href="mailto:contact@1001aides.org">contact@1001aides.org</a></p>
+        <p>📞 <span class="ph">Téléphone à ajouter</span></p>
+        <p>📍 2 rue Boris Vian, 221 – 78280 Guyancourt, France</p>
+        <p>🏛️ Association loi 1901 · RNA W784011426</p>
+      </div>
     </div>
-    <div class="contact-box">
-      <h3>Nous contacter</h3>
-      <p>✉️ <a href="mailto:contact@1001aides.org">contact@1001aides.org</a></p>
-      <p>📞 <span class="ph">Téléphone à ajouter</span></p>
-      <p>📍 2 rue Boris Vian, 78280 Guyancourt, France</p>
-      <a href="mailto:contact@1001aides.org" class="btn btn-water" style="margin-top:14px">Écrire à l'association</a>
-    </div>
+    <form class="contact-box contact-form" id="contact-form" action="/api/contact" method="post" novalidate>
+      <h3>Nous écrire</h3>
+      <fieldset class="who">
+        <legend>Vous êtes</legend>
+        <label class="radio"><input type="radio" name="type" value="particulier" checked> Un particulier</label>
+        <label class="radio"><input type="radio" name="type" value="societe"> Une société ou une organisation</label>
+      </fieldset>
+      <div class="row" data-for="particulier">
+        <label><span class="lbl">Prénom <span aria-hidden="true">*</span></span><input type="text" name="prenom" autocomplete="given-name" maxlength="80"></label>
+        <label><span class="lbl">Nom <span aria-hidden="true">*</span></span><input type="text" name="nom" autocomplete="family-name" maxlength="80"></label>
+      </div>
+      <div class="row" data-for="societe" hidden>
+        <label><span class="lbl">Nom de la société <span aria-hidden="true">*</span></span><input type="text" name="societe" autocomplete="organization" maxlength="120"></label>
+        <label><span class="lbl">Personne à contacter <span aria-hidden="true">*</span></span><input type="text" name="contact" autocomplete="name" maxlength="120" placeholder="Prénom et nom"></label>
+      </div>
+      <div class="row">
+        <label><span class="lbl">E-mail <span aria-hidden="true">*</span></span><input type="email" name="email" autocomplete="email" required maxlength="160"></label>
+        <label><span class="lbl">Téléphone <small>(facultatif)</small></span><input type="tel" name="telephone" autocomplete="tel" maxlength="30"></label>
+      </div>
+      <label><span class="lbl">Objet</span>
+        <select name="objet">
+          <option>Faire un don</option>
+          <option>Donner du matériel</option>
+          <option>Devenir volontaire</option>
+          <option>Proposer un projet</option>
+          <option selected>Autre demande</option>
+        </select>
+      </label>
+      <label><span class="lbl">Message <span aria-hidden="true">*</span></span><textarea name="message" rows="5" required maxlength="4000"></textarea></label>
+      <label class="hp" aria-hidden="true">Ne pas remplir<input type="text" name="site_web" tabindex="-1" autocomplete="off"></label>
+      <label class="consent"><input type="checkbox" name="consentement" required> J'accepte que 1001aides utilise ces informations pour répondre à ma demande. Elles ne sont ni vendues ni transmises à des tiers.</label>
+      <button type="submit" class="btn btn-water">Envoyer le message</button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+      <p class="note">* Champs obligatoires</p>
+    </form>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <div style="display:flex;align-items:center;gap:12px"><img src="/img/logo-1001aides-blanc.svg" alt="" width="44" height="41" style="border-radius:8px">© 2026 Association 1001aides · <span class="ph" style="color:#1C2328">RNA / SIREN à ajouter</span></div>
+    <div style="display:flex;align-items:center;gap:12px"><img src="/img/logo-1001aides-blanc.svg" alt="" width="44" height="41" style="border-radius:8px">© 2026 Association 1001aides (loi 1901) · RNA W784011426 · Siège : 2 rue Boris Vian, 221 – 78280 Guyancourt</div>
     <div><a href="#contact">Contact</a> · <a href="#">Mentions légales</a></div>
   </div>
 </footer>
 
+
+<script>
+(function(){
+  var f=document.getElementById('contact-form'); if(!f) return;
+  var status=f.querySelector('.form-status'), btn=f.querySelector('button[type=submit]');
+  function type(){return f.querySelector('input[name=type]:checked').value;}
+  function toggle(){
+    f.querySelectorAll('.row[data-for]').forEach(function(r){r.hidden=r.dataset.for!==type();});
+  }
+  f.querySelectorAll('input[name=type]').forEach(function(r){r.addEventListener('change',toggle);});
+  f.addEventListener('input',function(e){if(e.target.value&&e.target.hasAttribute('aria-invalid')){e.target.removeAttribute('aria-invalid');}});
+  toggle();
+  function val(n){var e=f.elements[n];return e?String(e.value||'').trim():'';}
+  function setStatus(msg,cls,html){status.className='form-status '+(cls||'');if(html){status.innerHTML=msg;}else{status.textContent=msg;}}
+  function required(){
+    var r=['email','message'];
+    return r.concat(type()==='societe'?['societe','contact']:['prenom','nom']);
+  }
+  function validate(){
+    var bad=[];
+    f.querySelectorAll('[aria-invalid]').forEach(function(e){e.removeAttribute('aria-invalid');});
+    required().forEach(function(n){if(!val(n)) bad.push(n);});
+    if(val('email') && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('email'))) bad.push('email');
+    bad.forEach(function(n){f.elements[n].setAttribute('aria-invalid','true');});
+    if(!f.elements.consentement.checked) bad.push('consentement');
+    return bad;
+  }
+  function payload(){
+    var d={type:type()};
+    ['prenom','nom','societe','contact','email','telephone','objet','message','site_web'].forEach(function(n){d[n]=val(n);});
+    return d;
+  }
+  function mailtoLink(d){
+    var qui=d.type==='societe'?(d.societe+' ('+d.contact+')'):(d.prenom+' '+d.nom);
+    var body='De : '+qui+'\nE-mail : '+d.email+(d.telephone?'\nTéléphone : '+d.telephone:'')+'\n\n'+d.message;
+    return 'mailto:contact@1001aides.org?subject='+encodeURIComponent('[Site] '+d.objet+' – '+qui)+'&body='+encodeURIComponent(body);
+  }
+  f.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    var bad=validate();
+    if(bad.length){
+      setStatus(bad.indexOf('consentement')>=0&&bad.length===1?'Merci de cocher la case d\'accord pour envoyer votre message.':'Merci de compléter les champs obligatoires (en rouge) avec une adresse e-mail valide.','err');
+      var first=f.querySelector('[aria-invalid=true]'); if(first) first.focus();
+      return;
+    }
+    var d=payload(); btn.disabled=true; setStatus('Envoi en cours…');
+    fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
+      .then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,status:r.status,j:j};});})
+      .then(function(res){
+        if(res.ok){f.reset();toggle();setStatus('Merci ! Votre message a bien été envoyé. Nous vous répondrons rapidement.','ok');}
+        else if(res.status===400){setStatus(res.j.error||'Certains champs sont invalides.','err');}
+        else{throw new Error('indisponible');}
+      })
+      .catch(function(){
+        var a=mailtoLink(d);
+        setStatus('L\'envoi automatique n\'est pas disponible pour le moment. <a href="'+a+'">Cliquez ici pour envoyer votre message depuis votre messagerie</a> (il est déjà rempli).','err',true);
+      })
+      .finally(function(){btn.disabled=false;});
+  });
+})();
+</script>
 </body>
 </html>
