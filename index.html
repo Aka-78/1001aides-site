@@ -126,6 +126,11 @@
   .card ul{margin:10px 0 0 18px;opacity:.9;font-size:.95rem;flex:1}
   .card .btn{margin-top:20px;align-self:flex-start}
   .don-widget{margin-top:32px;background:#fff;color:var(--ink);border-radius:var(--radius);padding:24px}
+  .don-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+  .don-qr{text-align:center;flex:0 0 auto}
+  .don-qr img{width:110px;height:110px;margin:0 auto}
+  .don-qr figcaption{font-size:.78rem;color:var(--muted);margin-top:4px;max-width:120px}
+  @media(max-width:600px){.don-qr{display:none}}
   .don-widget p{color:var(--muted);font-size:.95rem;margin:4px 0 14px}
   .don-widget iframe{width:100%;height:750px;border:0;display:block}
   .tax{margin-top:28px;background:rgba(242,169,0,.15);border:1px solid rgba(242,169,0,.5);border-radius:var(--radius);padding:18px 20px;font-size:.95rem}
@@ -343,8 +348,16 @@
       </div>
     </div>
     <div class="don-widget" id="don">
-      <h3>Faire un don en ligne</h3>
-      <p>Paiement sécurisé par HelloAsso, la plateforme de paiement des associations. 100 % de votre don va au projet.</p>
+      <div class="don-head">
+        <div>
+          <h3>Faire un don en ligne</h3>
+          <p>Paiement sécurisé par HelloAsso, la plateforme de paiement des associations. 100 % de votre don va au projet.</p>
+        </div>
+        <figure class="don-qr">
+          <img src="/img/qr-don-1001aides.svg" alt="QR code vers la collecte HelloAsso 5 puits pour 5 villages" width="110" height="110">
+          <figcaption>Ou scannez avec votre téléphone</figcaption>
+        </figure>
+      </div>
       <iframe id="haWidget" title="Formulaire de don HelloAsso – 5 puits pour 5 villages" allowtransparency="true" scrolling="auto" src="https://www.helloasso.com/associations/1001aides/collectes/5-puits-pour-5-villages/widget" loading="lazy"></iframe>
     </div>
     <!-- N'afficher ce bloc QUE si l'association est éligible aux reçus fiscaux -->
