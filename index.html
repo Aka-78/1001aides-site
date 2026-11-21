@@ -3,17 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>1001aides — De l'eau solaire pour les villages du Sénégal</title>
+<title>1001aides — Du soleil au bout des mains</title>
 <meta name="description" content="1001aides équipe les puits profonds des villages du Sénégal de pompes solaires. Financez un puits, donnez du matériel ou devenez volontaire.">
 <meta property="og:title" content="1001aides — De l'eau solaire pour les villages du Sénégal">
 <meta property="og:description" content="Pompage solaire de puits profonds, réservoir de 3 m³, eau vendue à prix accessible pour assurer la maintenance. 5 puits à financer.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://1001aides.org/">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='14' fill='%23F2A900'/><path d='M32 22c6 8 9 12 9 16a9 9 0 0 1-18 0c0-4 3-8 9-16z' fill='%230B6E8A'/></svg>">
+<link rel="icon" type="image/svg+xml" href="/img/icone-1001aides.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<meta property="og:image" content="https://1001aides.org/img/og-image.png">
+<meta name="theme-color" content="#1B2FA0">
 <style>
   :root{
     --sun:#F2A900; --sun-soft:#FFF4D6;
-    --water:#0B6E8A; --water-dark:#06495C; --water-soft:#E4F3F7;
+    --water:#1B2FA0; --water-dark:#121F6E; --water-soft:#E6E9F8;
     --earth:#B5562B; --sand:#FBF7F0;
     --ink:#1C2328; --muted:#5B6770; --line:#E6E1D8;
     --radius:14px; --max:1080px;
@@ -40,16 +44,19 @@
   header{position:sticky;top:0;z-index:10;background:rgba(251,247,240,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
   .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.25rem;color:var(--ink);text-decoration:none}
-  .logo svg{width:34px;height:34px}
+  .logo img{height:48px;width:auto}
   .nav ul{display:flex;gap:22px;list-style:none}
   .nav ul a{color:var(--ink);text-decoration:none;font-weight:600;font-size:.95rem}
   .nav .btn{padding:10px 18px;font-size:.95rem}
   @media(max-width:760px){.nav ul{display:none}}
 
   /* Hero */
-  .hero{background:linear-gradient(160deg,var(--water-dark) 0%,var(--water) 60%,#1590A8 100%);color:#fff;padding:90px 0 80px;position:relative;overflow:hidden}
+  .hero{background:linear-gradient(160deg,var(--water-dark) 0%,var(--water) 70%,#2A40C0 100%);color:#fff;padding:90px 0 80px;position:relative;overflow:hidden}
   .hero::after{content:"";position:absolute;right:-120px;top:-120px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,var(--sun) 0%,rgba(242,169,0,.35) 45%,transparent 70%)}
   .hero .wrap{position:relative;z-index:1}
+  .hero-grid{display:grid;grid-template-columns:1fr 300px;gap:40px;align-items:center}
+  .hero-logo{width:100%;border-radius:28px;box-shadow:0 18px 40px rgba(0,0,0,.25)}
+  @media(max-width:820px){.hero-grid{grid-template-columns:1fr}.hero-logo{width:200px;order:-1}}
   .hero h1{font-size:clamp(2rem,5.5vw,3.4rem);max-width:15ch;margin-bottom:.4em}
   .hero p{font-size:1.15rem;max-width:56ch;opacity:.95}
   .hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
@@ -124,9 +131,7 @@
 <header>
   <div class="wrap nav">
     <a href="#" class="logo" aria-label="1001aides, accueil">
-      <!-- REMPLACER par le logo : <img src="logo.png" alt="1001aides" height="34"> -->
-      <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#FFF4D6"/><circle cx="32" cy="26" r="11" fill="#F2A900"/><path d="M32 30c7 9 10 13 10 17a10 10 0 0 1-20 0c0-4 3-8 10-17z" fill="#0B6E8A"/></svg>
-      1001aides
+      <img src="/img/logo-1001aides.svg" alt="1001 aides" width="52" height="48">
     </a>
     <ul>
       <li><a href="#projet">Le projet</a></li>
@@ -139,7 +144,8 @@
 </header>
 
 <section class="hero">
-  <div class="wrap">
+  <div class="wrap hero-grid">
+   <div>
     <span class="eyebrow" style="color:var(--sun)">Association 1001aides · Sénégal</span>
     <h1>L'eau du puits, pompée par le soleil.</h1>
     <p>Nous équipons les puits profonds des villages du Sénégal de pompes solaires. L'eau monte toute seule pendant la journée, et le village la vend à petit prix pour financer lui-même l'entretien.</p>
@@ -152,6 +158,8 @@
       <div class="fact"><b>5 000 €</b><span>par puits</span></div>
       <div class="fact"><b>3 m³</b><span>de réservoir minimum par puits</span></div>
     </div>
+   </div>
+   <img class="hero-logo" src="/img/logo-1001aides-slogan-blanc.svg" alt="1001 aides – Du soleil au bout des mains">
   </div>
 </section>
 
@@ -280,7 +288,7 @@
 
 <footer>
   <div class="wrap">
-    <div>© 2026 Association 1001aides · <span class="ph" style="color:#1C2328">RNA / SIREN à ajouter</span></div>
+    <div style="display:flex;align-items:center;gap:12px"><img src="/img/logo-1001aides-blanc.svg" alt="" width="44" height="41" style="border-radius:8px">© 2026 Association 1001aides · <span class="ph" style="color:#1C2328">RNA / SIREN à ajouter</span></div>
     <div><a href="#contact">Contact</a> · <a href="#">Mentions légales</a></div>
   </div>
 </footer>
