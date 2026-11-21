@@ -82,6 +82,12 @@
   @media(max-width:820px){.two{grid-template-columns:1fr;gap:28px}}
   .photo{aspect-ratio:4/3;border-radius:var(--radius);background:repeating-linear-gradient(45deg,#EFE8DC,#EFE8DC 12px,#E8DFD0 12px,#E8DFD0 24px);display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:600;text-align:center;padding:20px;border:2px dashed #D6CBB8}
 
+  .photo-fig{margin:0}
+  .photo-img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:var(--radius);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+  .photo-fig figcaption{font-size:.85rem;color:var(--muted);margin-top:8px}
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+  .gallery img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:10px}
+
   /* Steps */
   .how{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:32px;counter-reset:s}
@@ -125,6 +131,14 @@
   .card p{opacity:.9;font-size:.97rem;flex:1}
   .card ul{margin:10px 0 0 18px;opacity:.9;font-size:.95rem;flex:1}
   .card .btn{margin-top:20px;align-self:flex-start}
+  .don-widget{margin-top:32px;background:#fff;color:var(--ink);border-radius:var(--radius);padding:24px}
+  .don-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+  .don-qr{text-align:center;flex:0 0 auto}
+  .don-qr img{width:110px;height:110px;margin:0 auto}
+  .don-qr figcaption{font-size:.78rem;color:var(--muted);margin-top:4px;max-width:120px}
+  @media(max-width:600px){.don-qr{display:none}}
+  .don-widget p{color:var(--muted);font-size:.95rem;margin:4px 0 14px}
+  .don-widget iframe{width:100%;height:750px;border:0;display:block}
   .tax{margin-top:28px;background:rgba(242,169,0,.15);border:1px solid rgba(242,169,0,.5);border-radius:var(--radius);padding:18px 20px;font-size:.95rem}
 
   /* About / contact */
@@ -176,7 +190,7 @@
       <li><a href="#aider">Agir</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="#aider" class="btn btn-sun">Faire un don</a>
+    <a href="https://www.helloasso.com/associations/1001aides/collectes/5-puits-pour-5-villages" target="_blank" rel="noopener" class="btn btn-sun">Faire un don</a>
   </div>
 </header>
 
@@ -187,7 +201,7 @@
     <h1>Des aides concrètes pour les villages d'Afrique occidentale.</h1>
     <p>Eau grâce au soleil, maraîchage pour les groupements, équipement des centres de santé… 1001aides finance et installe des équipements utiles, que les communautés peuvent ensuite faire vivre elles-mêmes.</p>
     <div class="ctas">
-      <a href="#aider" class="btn btn-sun">Soutenir un projet</a>
+      <a href="https://www.helloasso.com/associations/1001aides/collectes/5-puits-pour-5-villages" target="_blank" rel="noopener" class="btn btn-sun">Soutenir un projet</a>
       <a href="#aider" class="btn btn-ghost">Devenir volontaire</a>
     </div>
     <div class="facts">
@@ -246,8 +260,10 @@
       <p>Dans de nombreux villages, l'eau est là, mais à plus de 20 mètres de profondeur. La puiser demande des heures d'effort chaque jour, souvent aux femmes et aux enfants.</p>
       <p>Les pompes à moteur coûtent cher en carburant et tombent en panne sans que personne ne puisse payer la réparation.</p>
     </div>
-    <!-- REMPLACER par une photo : <img class="photo" src="puits.jpg" alt="Puits du village"> -->
-    <div class="photo">📷 Photo d'un puits du village<br>(à remplacer)</div>
+    <figure class="photo-fig">
+      <img class="photo-img" src="/img/projet/puits-village.jpg" alt="Puits maçonné du village avec son ancien portique de puisage" loading="lazy" width="768" height="1020">
+      <figcaption>Le puits du village pilote.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -267,8 +283,10 @@
 
 <section id="pilote" class="pilot">
   <div class="wrap two">
-    <!-- REMPLACER par une photo du pilote : <img class="photo" src="pilote.jpg" alt="Installation pilote"> -->
-    <div class="photo">📷 Photo de l'installation pilote<br>(à remplacer)</div>
+    <figure class="photo-fig">
+      <img class="photo-img" src="/img/projet/pilote-panneaux-reservoir.jpg" alt="Installation pilote : structure des panneaux solaires et réservoir noir sur sa tour maçonnée" loading="lazy" width="768" height="1020">
+      <figcaption>L'installation pilote : panneaux solaires et réservoir surélevé.</figcaption>
+    </figure>
     <div>
       <span class="eyebrow">Ça marche déjà</span>
       <h2>Un pilote testé avec succès</h2>
@@ -278,6 +296,11 @@
         <li>Le réservoir est plein avant le coucher du soleil.</li>
         <li>La vente de l'eau finance l'entretien, sans dépendre de nouveaux dons.</li>
       </ul>
+      <div class="gallery">
+        <img src="/img/projet/pilote-vue-ensemble.jpg" alt="Vue d'ensemble : panneaux solaires, puits et réservoir" loading="lazy" width="768" height="1020">
+        <img src="/img/projet/pilote-reservoir-panneaux-2.jpg" alt="Réservoir sur sa tour et rangée de panneaux solaires" loading="lazy" width="768" height="1020">
+        <img src="/img/projet/pilote-tour-reservoir.jpg" alt="Tour maçonnée portant le réservoir d'eau" loading="lazy" width="768" height="1020">
+      </div>
     </div>
   </div>
 </section>
@@ -297,14 +320,15 @@
     </div>
     <div class="budget">
       <h3>Ce que finance un puits</h3>
-      <!-- METTRE À JOUR avec les montants réels du pilote -->
       <table>
-        <tr><td>Panneaux photovoltaïques et support</td><td>à préciser</td></tr>
-        <tr><td>Pompe immergée et câblage</td><td>à préciser</td></tr>
-        <tr><td>Réservoir de 3 m³ ou plus et tuyauterie</td><td>à préciser</td></tr>
-        <tr><td>Transport, installation et formation du village</td><td>à préciser</td></tr>
+        <tr><td>Panneaux photovoltaïques et support</td><td>1 830 €</td></tr>
+        <tr><td>Pompe immergée et câblage</td><td>915 €</td></tr>
+        <tr><td>Réservoir de 3 m³ ou plus et tuyauterie</td><td>655 €</td></tr>
+        <tr><td>Transport du matériel jusqu'au village</td><td>762 €</td></tr>
+        <tr><td>Installation, mise en service et formation du village</td><td>838 €</td></tr>
         <tr><td>Total par puits</td><td>5 000 €</td></tr>
       </table>
+      <a href="https://www.helloasso.com/associations/1001aides/collectes/5-puits-pour-5-villages" target="_blank" rel="noopener" class="btn btn-sun" style="margin-top:18px">Financer un puits sur HelloAsso</a>
     </div>
   </div>
 </section>
@@ -318,8 +342,7 @@
         <div class="ico">💶</div>
         <h3>Faire un don</h3>
         <p>Du petit don au financement d'un projet complet (un puits, un périmètre maraîchant, l'équipement d'un poste de santé), chaque euro va au matériel et à l'installation.</p>
-        <!-- REMPLACER le lien par la page de don HelloAsso de 1001aides -->
-        <a href="#contact" class="btn btn-sun">Je donne</a>
+        <a href="https://www.helloasso.com/associations/1001aides/collectes/5-puits-pour-5-villages" target="_blank" rel="noopener" class="btn btn-sun">Je donne</a>
       </div>
       <div class="card">
         <div class="ico">🔧</div>
@@ -338,6 +361,19 @@
         <p>En France ou en Afrique occidentale : communication, recherche de partenaires, logistique, électricité, agriculture, santé, installation sur le terrain… Toutes les compétences sont utiles.</p>
         <a href="mailto:contact@1001aides.org?subject=Je%20veux%20%C3%AAtre%20volontaire" class="btn btn-sun">Je m'engage</a>
       </div>
+    </div>
+    <div class="don-widget" id="don">
+      <div class="don-head">
+        <div>
+          <h3>Faire un don en ligne</h3>
+          <p>Paiement sécurisé par HelloAsso, la plateforme de paiement des associations. 100 % de votre don va au projet.</p>
+        </div>
+        <figure class="don-qr">
+          <img src="/img/qr-don-1001aides.svg" alt="QR code vers la collecte HelloAsso 5 puits pour 5 villages" width="110" height="110">
+          <figcaption>Ou scannez avec votre téléphone</figcaption>
+        </figure>
+      </div>
+      <iframe id="haWidget" title="Formulaire de don HelloAsso – 5 puits pour 5 villages" allowtransparency="true" scrolling="auto" src="https://www.helloasso.com/associations/1001aides/collectes/5-puits-pour-5-villages/widget" loading="lazy"></iframe>
     </div>
     <!-- N'afficher ce bloc QUE si l'association est éligible aux reçus fiscaux -->
     <div class="tax">🧾 <b>Réduction d'impôt :</b> les dons à 1001aides ouvrent droit à un reçu fiscal (texte à confirmer selon l'éligibilité de l'association).</div>
