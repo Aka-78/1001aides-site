@@ -125,6 +125,9 @@
   .card p{opacity:.9;font-size:.97rem;flex:1}
   .card ul{margin:10px 0 0 18px;opacity:.9;font-size:.95rem;flex:1}
   .card .btn{margin-top:20px;align-self:flex-start}
+  .don-widget{margin-top:32px;background:#fff;color:var(--ink);border-radius:var(--radius);padding:24px}
+  .don-widget p{color:var(--muted);font-size:.95rem;margin:4px 0 14px}
+  .don-widget iframe{width:100%;height:750px;border:0;display:block}
   .tax{margin-top:28px;background:rgba(242,169,0,.15);border:1px solid rgba(242,169,0,.5);border-radius:var(--radius);padding:18px 20px;font-size:.95rem}
 
   /* About / contact */
@@ -338,6 +341,11 @@
         <p>En France ou en Afrique occidentale : communication, recherche de partenaires, logistique, électricité, agriculture, santé, installation sur le terrain… Toutes les compétences sont utiles.</p>
         <a href="mailto:contact@1001aides.org?subject=Je%20veux%20%C3%AAtre%20volontaire" class="btn btn-sun">Je m'engage</a>
       </div>
+    </div>
+    <div class="don-widget" id="don">
+      <h3>Faire un don en ligne</h3>
+      <p>Paiement sécurisé par HelloAsso, la plateforme de paiement des associations. 100 % de votre don va au projet.</p>
+      <iframe id="haWidget" title="Formulaire de don HelloAsso – 5 puits pour 5 villages" allowtransparency="true" scrolling="auto" src="https://www.helloasso.com/associations/1001aides/collectes/5-puits-pour-5-villages/widget" loading="lazy"></iframe>
     </div>
     <!-- N'afficher ce bloc QUE si l'association est éligible aux reçus fiscaux -->
     <div class="tax">🧾 <b>Réduction d'impôt :</b> les dons à 1001aides ouvrent droit à un reçu fiscal (texte à confirmer selon l'éligibilité de l'association).</div>
