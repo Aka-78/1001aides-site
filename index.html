@@ -241,21 +241,21 @@
         <span class="tag">Groupements · GIE</span>
         <h3>Maraîchage</h3>
         <p>Appui aux groupements d'intérêt économique (GIE) pour lancer ou développer une activité maraîchère : accès à l'eau, irrigation, semences, outils, clôture, formation.</p>
-        <a class="more" href="mailto:contact@1001aides.org?subject=Projet%20mara%C3%AEchage%20GIE">Présenter un groupement →</a>
+        <a class="more" href="#contact" data-objet="Proposer un projet" data-sujet="Projet maraîchage – présentation d'un groupement (GIE)">Présenter un groupement →</a>
       </div>
       <div class="domain">
         <div class="ico">🏥</div>
         <span class="tag">Postes et centres de santé</span>
         <h3>Équipement de santé</h3>
         <p>Équipement des postes et centres de santé : matériel médical de base, mobilier, électricité solaire pour l'éclairage et la conservation des médicaments.</p>
-        <a class="more" href="mailto:contact@1001aides.org?subject=%C3%89quipement%20centre%20de%20sant%C3%A9">Signaler un besoin →</a>
+        <a class="more" href="#contact" data-objet="Proposer un projet" data-sujet="Équipement de santé – signalement d'un besoin">Signaler un besoin →</a>
       </div>
       <div class="domain">
         <div class="ico">🤲</div>
         <span class="tag">Sur demande</span>
         <h3>Autres projets communautaires</h3>
         <p>Un autre besoin dans votre village ? Nous étudions chaque demande portée par une communauté, une association locale ou un groupement.</p>
-        <a class="more" href="mailto:contact@1001aides.org?subject=Proposition%20de%20projet">Proposer un projet →</a>
+        <a class="more" href="#contact" data-objet="Proposer un projet">Proposer un projet →</a>
       </div>
     </div>
   </div>
@@ -396,7 +396,7 @@
       <h2>1001aides</h2>
       <p>1001aides est une association loi 1901, déclarée en août 2024 à la préfecture des Yvelines et portée par des bénévoles entre la France et l'Afrique occidentale. Notre objectif : apporter aux villages des aides concrètes et durables (eau, agriculture, santé), avec des équipements qu'ils peuvent entretenir eux-mêmes.</p>
       <div class="contact-info">
-        <p>✉️ <a href="mailto:contact@1001aides.org">contact@1001aides.org</a></p>
+        <p>✉️ <a href="#contact-form" data-objet="Autre demande">Nous écrire via le formulaire</a></p>
         <p>📞 <span class="ph">Téléphone à ajouter</span></p>
         <p>📍 2 rue Boris Vian – 78280 Guyancourt, France</p>
         <p>🏛️ Association loi 1901 · RNA W784011426</p>
@@ -532,9 +532,11 @@
     Object.keys(EXTRA).forEach(function(k){document.getElementById(EXTRA[k].box).hidden=(x!==EXTRA[k]);});
     f.querySelector('.msg-req').hidden=!!x; f.elements.message.placeholder=x?x.ph:'';}
   f.elements.objet.addEventListener('change',toggleExtra);
-  function goTo(objet){var x=EXTRA[objet]; f.elements.objet.value=objet; toggleExtra(); history.replaceState(null,'','#'+x.box);
-    document.getElementById('contact').scrollIntoView({behavior:'smooth'}); setTimeout(function(){f.elements[x.focus].focus({preventScroll:true});},500);}
-  document.querySelectorAll('[data-objet]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault(); goTo(a.dataset.objet);});});
+  function goTo(objet,sujet){var x=EXTRA[objet]; f.elements.objet.value=objet; toggleExtra(); history.replaceState(null,'','#'+(x?x.box:'contact'));
+    var m=f.elements.message; if(!m.value||m.dataset.auto===m.value){m.value=sujet?sujet+' :\n':''; m.dataset.auto=m.value;}
+    document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+    setTimeout(function(){var t=x?f.elements[x.focus]:(f.elements.prenom.offsetParent?f.elements.prenom:f.elements.societe); t.focus({preventScroll:true});},500);}
+  document.querySelectorAll('[data-objet]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault(); goTo(a.dataset.objet,a.dataset.sujet);});});
   Object.keys(EXTRA).forEach(function(k){if(location.hash==='#'+EXTRA[k].box) goTo(k);});
   toggleExtra();
   f.addEventListener('change',function(e){if(e.target.name==='vol_comp'){var g=f.querySelector('.chk-group');g.removeAttribute('aria-invalid');}});
@@ -563,13 +565,6 @@
     ['prenom','nom','societe','contact','email','telephone','objet','message','site_web'].concat(x?x.fields:[]).forEach(function(n){d[n]=val(n);});
     return d;
   }
-  function mailtoLink(d){
-    var qui=d.type==='societe'?(d.societe+' ('+d.contact+')'):(d.prenom+' '+d.nom);
-    var mat=d.objet===MAT?('\n\nDon de matériel\nType : '+d.mat_type+'\nDescription : '+d.mat_desc+(d.mat_qte?'\nQuantité : '+d.mat_qte:'')+(d.mat_etat?'\nÉtat : '+d.mat_etat:'')+'\nLieu d\'enlèvement : '+d.mat_lieu):'';
-    var vol=d.objet===VOL?('\n\nDevenir volontaire\nLieu : '+d.vol_lieu+'\nCompétences : '+d.vol_comp+(d.vol_dispo?'\nDisponibilité : '+d.vol_dispo:'')+(d.vol_ville?'\nVille : '+d.vol_ville:'')):'';
-    var body='De : '+qui+'\nE-mail : '+d.email+(d.telephone?'\nTéléphone : '+d.telephone:'')+mat+vol+(d.message?'\n\n'+d.message:'');
-    return 'mailto:contact@1001aides.org?subject='+encodeURIComponent('[Site] '+d.objet+' – '+qui)+'&body='+encodeURIComponent(body);
-  }
   f.addEventListener('submit',function(ev){
     ev.preventDefault();
     var bad=validate();
@@ -587,8 +582,7 @@
         else{throw new Error('indisponible');}
       })
       .catch(function(){
-        var a=mailtoLink(d);
-        setStatus('L\'envoi automatique n\'est pas disponible pour le moment. <a href="'+a+'">Cliquez ici pour envoyer votre message depuis votre messagerie</a> (il est déjà rempli).','err',true);
+        setStatus('L\'envoi n\'a pas abouti. Vos informations sont conservées : merci de réessayer dans quelques minutes.','err');
       })
       .finally(function(){btn.disabled=false;});
   });
