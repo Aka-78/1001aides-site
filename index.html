@@ -165,6 +165,9 @@
   .contact-form label.radio,.contact-form label.consent{flex-direction:row;align-items:flex-start;gap:8px;font-weight:400}
   .contact-form label.consent{font-size:.88rem;color:var(--muted)}
   .contact-form input[type=radio],.contact-form input[type=checkbox]{margin-top:4px;accent-color:var(--water)}
+  .contact-form fieldset.materiel{display:flex;flex-direction:column;gap:12px;background:var(--sun-soft);border-radius:10px;padding:14px}
+  .contact-form fieldset.materiel[hidden]{display:none}
+  .contact-form fieldset.materiel .row{margin:0}
   .contact-form .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
   .contact-form button{border:0;cursor:pointer;font:inherit;font-weight:700;align-self:flex-start}
   .contact-form button[disabled]{opacity:.6;cursor:wait}
@@ -353,7 +356,7 @@
           <li>Agricole : irrigation goutte-à-goutte, outils</li>
           <li>Médical : matériel de soins, mobilier</li>
         </ul>
-        <a href="mailto:contact@1001aides.org?subject=Don%20de%20mat%C3%A9riel" class="btn btn-sun">Proposer du matériel</a>
+        <a href="#don-materiel" class="btn btn-sun" data-objet="Donner du matériel">Proposer du matériel</a>
       </div>
       <div class="card">
         <div class="ico">🙋</div>
@@ -421,7 +424,35 @@
           <option selected>Autre demande</option>
         </select>
       </label>
-      <label><span class="lbl">Message <span aria-hidden="true">*</span></span><textarea name="message" rows="5" required maxlength="4000"></textarea></label>
+      <fieldset class="materiel" id="don-materiel" hidden>
+        <legend>Votre don de matériel</legend>
+        <div class="row">
+          <label><span class="lbl">Type de matériel <span aria-hidden="true">*</span></span>
+            <select name="mat_type">
+              <option value="">Choisir…</option>
+              <option>Solaire : panneaux, pompes, câbles</option>
+              <option>Agricole : irrigation, outils</option>
+              <option>Médical : matériel de soins, mobilier</option>
+              <option>Autre</option>
+            </select>
+          </label>
+          <label><span class="lbl">État</span>
+            <select name="mat_etat">
+              <option value="">Choisir…</option>
+              <option>Neuf</option>
+              <option>Très bon état</option>
+              <option>Bon état</option>
+              <option>À réviser</option>
+            </select>
+          </label>
+        </div>
+        <label><span class="lbl">Description <span aria-hidden="true">*</span></span><input type="text" name="mat_desc" maxlength="300" placeholder="Ex. : 4 panneaux solaires 300 W avec supports"></label>
+        <div class="row">
+          <label><span class="lbl">Quantité</span><input type="text" name="mat_qte" maxlength="60" placeholder="Ex. : 4"></label>
+          <label><span class="lbl">Lieu d'enlèvement <span aria-hidden="true">*</span></span><input type="text" name="mat_lieu" maxlength="120" placeholder="Code postal et ville"></label>
+        </div>
+      </fieldset>
+      <label><span class="lbl">Message <span class="msg-req" aria-hidden="true">*</span></span><textarea name="message" rows="5" required maxlength="4000"></textarea></label>
       <label class="hp" aria-hidden="true">Ne pas remplir<input type="text" name="site_web" tabindex="-1" autocomplete="off"></label>
       <label class="consent"><input type="checkbox" name="consentement" required> J'accepte que 1001aides utilise ces informations pour répondre à ma demande. Elles ne sont ni vendues ni transmises à des tiers.</label>
       <button type="submit" class="btn btn-water">Envoyer le message</button>
@@ -448,12 +479,21 @@
     f.querySelectorAll('.row[data-for]').forEach(function(r){r.hidden=r.dataset.for!==type();});
   }
   f.querySelectorAll('input[name=type]').forEach(function(r){r.addEventListener('change',toggle);});
+  var MAT='Donner du matériel', matBox=document.getElementById('don-materiel');
+  function isMat(){return f.elements.objet.value===MAT;}
+  function toggleMat(){matBox.hidden=!isMat(); f.querySelector('.msg-req').hidden=isMat();
+    f.elements.message.placeholder=isMat()?'Précisions (facultatif) : dimensions, disponibilité, photos à envoyer…':'';}
+  f.elements.objet.addEventListener('change',toggleMat);
+  function goMat(){f.elements.objet.value=MAT; toggleMat(); document.getElementById('contact').scrollIntoView({behavior:'smooth'}); setTimeout(function(){f.elements.mat_type.focus({preventScroll:true});},500);}
+  document.querySelectorAll('[data-objet]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault(); history.replaceState(null,'','#don-materiel'); goMat();});});
+  if(location.hash==='#don-materiel'){goMat();}
+  toggleMat();
   f.addEventListener('input',function(e){if(e.target.value&&e.target.hasAttribute('aria-invalid')){e.target.removeAttribute('aria-invalid');}});
   toggle();
   function val(n){var e=f.elements[n];return e?String(e.value||'').trim():'';}
   function setStatus(msg,cls,html){status.className='form-status '+(cls||'');if(html){status.innerHTML=msg;}else{status.textContent=msg;}}
   function required(){
-    var r=['email','message'];
+    var r=['email'].concat(isMat()?['mat_type','mat_desc','mat_lieu']:['message']);
     return r.concat(type()==='societe'?['societe','contact']:['prenom','nom']);
   }
   function validate(){
@@ -467,12 +507,14 @@
   }
   function payload(){
     var d={type:type()};
-    ['prenom','nom','societe','contact','email','telephone','objet','message','site_web'].forEach(function(n){d[n]=val(n);});
+    ['prenom','nom','societe','contact','email','telephone','objet','message','site_web','mat_type','mat_desc','mat_qte','mat_etat','mat_lieu'].forEach(function(n){d[n]=val(n);});
+    if(d.objet!==MAT){['mat_type','mat_desc','mat_qte','mat_etat','mat_lieu'].forEach(function(n){delete d[n];});}
     return d;
   }
   function mailtoLink(d){
     var qui=d.type==='societe'?(d.societe+' ('+d.contact+')'):(d.prenom+' '+d.nom);
-    var body='De : '+qui+'\nE-mail : '+d.email+(d.telephone?'\nTéléphone : '+d.telephone:'')+'\n\n'+d.message;
+    var mat=d.objet===MAT?('\n\nDon de matériel\nType : '+d.mat_type+'\nDescription : '+d.mat_desc+(d.mat_qte?'\nQuantité : '+d.mat_qte:'')+(d.mat_etat?'\nÉtat : '+d.mat_etat:'')+'\nLieu d\'enlèvement : '+d.mat_lieu):'';
+    var body='De : '+qui+'\nE-mail : '+d.email+(d.telephone?'\nTéléphone : '+d.telephone:'')+mat+(d.message?'\n\n'+d.message:'');
     return 'mailto:contact@1001aides.org?subject='+encodeURIComponent('[Site] '+d.objet+' – '+qui)+'&body='+encodeURIComponent(body);
   }
   f.addEventListener('submit',function(ev){
@@ -487,7 +529,7 @@
     fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
       .then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,status:r.status,j:j};});})
       .then(function(res){
-        if(res.ok){f.reset();toggle();setStatus('Merci ! Votre message a bien été envoyé. Nous vous répondrons rapidement.','ok');}
+        if(res.ok){f.reset();toggle();toggleMat();setStatus('Merci ! Votre message a bien été envoyé. Nous vous répondrons rapidement.','ok');}
         else if(res.status===400){setStatus(res.j.error||'Certains champs sont invalides.','err');}
         else{throw new Error('indisponible');}
       })
