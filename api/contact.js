@@ -9,7 +9,8 @@
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const OBJETS = ["Faire un don", "Donner du matériel", "Devenir volontaire", "Proposer un projet", "Autre demande"];
 const LIMITS = { prenom: 80, nom: 80, societe: 120, contact: 120, email: 160, telephone: 30, message: 4000,
-  mat_type: 60, mat_desc: 300, mat_qte: 60, mat_etat: 40, mat_lieu: 120 };
+  mat_type: 60, mat_desc: 300, mat_qte: 60, mat_etat: 40, mat_lieu: 120,
+  vol_lieu: 60, vol_comp: 300, vol_dispo: 80, vol_ville: 120 };
 
 function clean(v, max) {
   return String(v == null ? "" : v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "").trim().slice(0, max);
@@ -35,7 +36,9 @@ module.exports = async function handler(req, res) {
   const objet = OBJETS.includes(body.objet) ? body.objet : "Autre demande";
 
   const materiel = objet === "Donner du matériel";
-  const missing = ["email"].concat(materiel ? ["mat_type", "mat_desc", "mat_lieu"] : ["message"])
+  const volontaire = objet === "Devenir volontaire";
+  const extraReq = materiel ? ["mat_type", "mat_desc", "mat_lieu"] : volontaire ? ["vol_lieu", "vol_comp"] : ["message"];
+  const missing = ["email"].concat(extraReq)
     .concat(type === "societe" ? ["societe", "contact"] : ["prenom", "nom"])
     .filter((k) => !d[k]);
   if (missing.length) return res.status(400).json({ error: "Merci de compléter les champs obligatoires." });
@@ -61,6 +64,14 @@ module.exports = async function handler(req, res) {
       `Quantité : ${d.mat_qte || "non précisée"}`,
       `État : ${d.mat_etat || "non précisé"}`,
       `Lieu d'enlèvement : ${d.mat_lieu}`,
+    ] : []),
+    ...(volontaire ? [
+      ``,
+      `Devenir volontaire`,
+      `Où agir : ${d.vol_lieu}`,
+      `Compétences : ${d.vol_comp}`,
+      `Disponibilité : ${d.vol_dispo || "non précisée"}`,
+      `Ville : ${d.vol_ville || "non précisée"}`,
     ] : []),
     ``,
     `Message :`,

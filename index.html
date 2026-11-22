@@ -156,7 +156,7 @@
   .contact-form label small{font-weight:400;color:var(--muted)}
   .contact-form input[type=text],.contact-form input[type=email],.contact-form input[type=tel],.contact-form select,.contact-form textarea{font:inherit;font-weight:400;padding:11px 13px;border:1px solid #CFC7B8;border-radius:10px;background:#fff;color:var(--ink);width:100%}
   .contact-form input:focus,.contact-form select:focus,.contact-form textarea:focus{outline:2px solid var(--water);outline-offset:1px;border-color:var(--water)}
-  .contact-form input[aria-invalid=true],.contact-form textarea[aria-invalid=true]{border-color:#C0392B;background:#FFF6F5}
+  .contact-form input[aria-invalid=true],.contact-form select[aria-invalid=true],.contact-form textarea[aria-invalid=true]{border-color:#C0392B;background:#FFF6F5}
   .contact-form .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:560px){.contact-form .row{grid-template-columns:1fr}}
   .contact-form .row[hidden]{display:none}
@@ -168,6 +168,12 @@
   .contact-form fieldset.materiel{display:flex;flex-direction:column;gap:12px;background:var(--sun-soft);border-radius:10px;padding:14px}
   .contact-form fieldset.materiel[hidden]{display:none}
   .contact-form fieldset.materiel .row{margin:0}
+  .contact-form .chk-group{display:flex;flex-direction:column;gap:6px;border:1px solid transparent;border-radius:10px}
+  .contact-form .chk-group .lbl{font-weight:600;font-size:.95rem}
+  .contact-form .chks{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px}
+  @media(max-width:560px){.contact-form .chks{grid-template-columns:1fr}}
+  .contact-form label.chk{flex-direction:row;align-items:flex-start;gap:8px;font-weight:400}
+  .contact-form .chk-group[aria-invalid=true]{border-color:#C0392B;background:#FFF6F5;padding:8px}
   .contact-form .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
   .contact-form button{border:0;cursor:pointer;font:inherit;font-weight:700;align-self:flex-start}
   .contact-form button[disabled]{opacity:.6;cursor:wait}
@@ -235,21 +241,21 @@
         <span class="tag">Groupements · GIE</span>
         <h3>Maraîchage</h3>
         <p>Appui aux groupements d'intérêt économique (GIE) pour lancer ou développer une activité maraîchère : accès à l'eau, irrigation, semences, outils, clôture, formation.</p>
-        <a class="more" href="mailto:contact@1001aides.org?subject=Projet%20mara%C3%AEchage%20GIE">Présenter un groupement →</a>
+        <a class="more" href="#contact" data-objet="Proposer un projet" data-sujet="Projet maraîchage – présentation d'un groupement (GIE)">Présenter un groupement →</a>
       </div>
       <div class="domain">
         <div class="ico">🏥</div>
         <span class="tag">Postes et centres de santé</span>
         <h3>Équipement de santé</h3>
         <p>Équipement des postes et centres de santé : matériel médical de base, mobilier, électricité solaire pour l'éclairage et la conservation des médicaments.</p>
-        <a class="more" href="mailto:contact@1001aides.org?subject=%C3%89quipement%20centre%20de%20sant%C3%A9">Signaler un besoin →</a>
+        <a class="more" href="#contact" data-objet="Proposer un projet" data-sujet="Équipement de santé – signalement d'un besoin">Signaler un besoin →</a>
       </div>
       <div class="domain">
         <div class="ico">🤲</div>
         <span class="tag">Sur demande</span>
         <h3>Autres projets communautaires</h3>
         <p>Un autre besoin dans votre village ? Nous étudions chaque demande portée par une communauté, une association locale ou un groupement.</p>
-        <a class="more" href="mailto:contact@1001aides.org?subject=Proposition%20de%20projet">Proposer un projet →</a>
+        <a class="more" href="#contact" data-objet="Proposer un projet">Proposer un projet →</a>
       </div>
     </div>
   </div>
@@ -362,7 +368,7 @@
         <div class="ico">🙋</div>
         <h3>Devenir volontaire</h3>
         <p>En France ou en Afrique occidentale : communication, recherche de partenaires, logistique, électricité, agriculture, santé, installation sur le terrain… Toutes les compétences sont utiles.</p>
-        <a href="mailto:contact@1001aides.org?subject=Je%20veux%20%C3%AAtre%20volontaire" class="btn btn-sun">Je m'engage</a>
+        <a href="#devenir-volontaire" class="btn btn-sun" data-objet="Devenir volontaire">Je m'engage</a>
       </div>
     </div>
     <div class="don-widget" id="don">
@@ -390,7 +396,7 @@
       <h2>1001aides</h2>
       <p>1001aides est une association loi 1901, déclarée en août 2024 à la préfecture des Yvelines et portée par des bénévoles entre la France et l'Afrique occidentale. Notre objectif : apporter aux villages des aides concrètes et durables (eau, agriculture, santé), avec des équipements qu'ils peuvent entretenir eux-mêmes.</p>
       <div class="contact-info">
-        <p>✉️ <a href="mailto:contact@1001aides.org">contact@1001aides.org</a></p>
+        <p>✉️ <a href="#contact-form" data-objet="Autre demande">Nous écrire via le formulaire</a></p>
         <p>📞 <span class="ph">Téléphone à ajouter</span></p>
         <p>📍 2 rue Boris Vian – 78280 Guyancourt, France</p>
         <p>🏛️ Association loi 1901 · RNA W784011426</p>
@@ -452,6 +458,42 @@
           <label><span class="lbl">Lieu d'enlèvement <span aria-hidden="true">*</span></span><input type="text" name="mat_lieu" maxlength="120" placeholder="Code postal et ville"></label>
         </div>
       </fieldset>
+      <fieldset class="materiel" id="devenir-volontaire" hidden>
+        <legend>Votre engagement</legend>
+        <div class="row">
+          <label><span class="lbl">Où souhaitez-vous agir ? <span aria-hidden="true">*</span></span>
+            <select name="vol_lieu">
+              <option value="">Choisir…</option>
+              <option>En France</option>
+              <option>En Afrique occidentale</option>
+              <option>En France et en Afrique</option>
+              <option>À distance</option>
+            </select>
+          </label>
+          <label><span class="lbl">Disponibilité</span>
+            <select name="vol_dispo">
+              <option value="">Choisir…</option>
+              <option>Quelques heures par mois</option>
+              <option>Quelques heures par semaine</option>
+              <option>Missions ponctuelles</option>
+              <option>Mission sur le terrain (plusieurs semaines)</option>
+            </select>
+          </label>
+        </div>
+        <div class="chk-group" data-name="vol_comp" tabindex="-1"><span class="lbl">Compétences <span aria-hidden="true">*</span></span>
+          <div class="chks">
+            <label class="chk"><input type="checkbox" name="vol_comp" value="Communication"> Communication</label>
+            <label class="chk"><input type="checkbox" name="vol_comp" value="Recherche de partenaires"> Recherche de partenaires</label>
+            <label class="chk"><input type="checkbox" name="vol_comp" value="Logistique"> Logistique</label>
+            <label class="chk"><input type="checkbox" name="vol_comp" value="Électricité / solaire"> Électricité / solaire</label>
+            <label class="chk"><input type="checkbox" name="vol_comp" value="Agriculture"> Agriculture</label>
+            <label class="chk"><input type="checkbox" name="vol_comp" value="Santé"> Santé</label>
+            <label class="chk"><input type="checkbox" name="vol_comp" value="Installation sur le terrain"> Installation sur le terrain</label>
+            <label class="chk"><input type="checkbox" name="vol_comp" value="Autre"> Autre</label>
+          </div>
+        </div>
+        <label><span class="lbl">Ville ou code postal</span><input type="text" name="vol_ville" maxlength="120" placeholder="Ex. : 78280 Guyancourt"></label>
+      </fieldset>
       <label><span class="lbl">Message <span class="msg-req" aria-hidden="true">*</span></span><textarea name="message" rows="5" required maxlength="4000"></textarea></label>
       <label class="hp" aria-hidden="true">Ne pas remplir<input type="text" name="site_web" tabindex="-1" autocomplete="off"></label>
       <label class="consent"><input type="checkbox" name="consentement" required> J'accepte que 1001aides utilise ces informations pour répondre à ma demande. Elles ne sont ni vendues ni transmises à des tiers.</label>
@@ -479,21 +521,33 @@
     f.querySelectorAll('.row[data-for]').forEach(function(r){r.hidden=r.dataset.for!==type();});
   }
   f.querySelectorAll('input[name=type]').forEach(function(r){r.addEventListener('change',toggle);});
-  var MAT='Donner du matériel', matBox=document.getElementById('don-materiel');
-  function isMat(){return f.elements.objet.value===MAT;}
-  function toggleMat(){matBox.hidden=!isMat(); f.querySelector('.msg-req').hidden=isMat();
-    f.elements.message.placeholder=isMat()?'Précisions (facultatif) : dimensions, disponibilité, photos à envoyer…':'';}
-  f.elements.objet.addEventListener('change',toggleMat);
-  function goMat(){f.elements.objet.value=MAT; toggleMat(); document.getElementById('contact').scrollIntoView({behavior:'smooth'}); setTimeout(function(){f.elements.mat_type.focus({preventScroll:true});},500);}
-  document.querySelectorAll('[data-objet]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault(); history.replaceState(null,'','#don-materiel'); goMat();});});
-  if(location.hash==='#don-materiel'){goMat();}
-  toggleMat();
+  var MAT='Donner du matériel', VOL='Devenir volontaire';
+  var EXTRA={};
+  EXTRA[MAT]={box:'don-materiel',req:['mat_type','mat_desc','mat_lieu'],focus:'mat_type',fields:['mat_type','mat_desc','mat_qte','mat_etat','mat_lieu'],
+    ph:'Précisions (facultatif) : dimensions, disponibilité, photos à envoyer…'};
+  EXTRA[VOL]={box:'devenir-volontaire',req:['vol_lieu','vol_comp'],focus:'vol_lieu',fields:['vol_lieu','vol_comp','vol_dispo','vol_ville'],
+    ph:'Présentez-vous en quelques mots (facultatif) : expérience, motivations…'};
+  function extra(){return EXTRA[f.elements.objet.value]||null;}
+  function toggleExtra(){var x=extra();
+    Object.keys(EXTRA).forEach(function(k){document.getElementById(EXTRA[k].box).hidden=(x!==EXTRA[k]);});
+    f.querySelector('.msg-req').hidden=!!x; f.elements.message.placeholder=x?x.ph:'';}
+  f.elements.objet.addEventListener('change',toggleExtra);
+  function goTo(objet,sujet){var x=EXTRA[objet]; f.elements.objet.value=objet; toggleExtra(); history.replaceState(null,'','#'+(x?x.box:'contact'));
+    var m=f.elements.message; if(!m.value||m.dataset.auto===m.value){m.value=sujet?sujet+' :\n':''; m.dataset.auto=m.value;}
+    document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+    setTimeout(function(){var t=x?f.elements[x.focus]:(f.elements.prenom.offsetParent?f.elements.prenom:f.elements.societe); t.focus({preventScroll:true});},500);}
+  document.querySelectorAll('[data-objet]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault(); goTo(a.dataset.objet,a.dataset.sujet);});});
+  Object.keys(EXTRA).forEach(function(k){if(location.hash==='#'+EXTRA[k].box) goTo(k);});
+  toggleExtra();
+  f.addEventListener('change',function(e){if(e.target.name==='vol_comp'){var g=f.querySelector('.chk-group');g.removeAttribute('aria-invalid');}});
   f.addEventListener('input',function(e){if(e.target.value&&e.target.hasAttribute('aria-invalid')){e.target.removeAttribute('aria-invalid');}});
   toggle();
-  function val(n){var e=f.elements[n];return e?String(e.value||'').trim():'';}
+  function val(n){if(n==='vol_comp'){return Array.prototype.filter.call(f.querySelectorAll('input[name=vol_comp]'),function(c){return c.checked;}).map(function(c){return c.value;}).join(', ');}
+    var e=f.elements[n];return e?String(e.value||'').trim():'';}
+  function field(n){return n==='vol_comp'?f.querySelector('.chk-group'):f.elements[n];}
   function setStatus(msg,cls,html){status.className='form-status '+(cls||'');if(html){status.innerHTML=msg;}else{status.textContent=msg;}}
   function required(){
-    var r=['email'].concat(isMat()?['mat_type','mat_desc','mat_lieu']:['message']);
+    var x=extra(), r=['email'].concat(x?x.req:['message']);
     return r.concat(type()==='societe'?['societe','contact']:['prenom','nom']);
   }
   function validate(){
@@ -501,21 +555,15 @@
     f.querySelectorAll('[aria-invalid]').forEach(function(e){e.removeAttribute('aria-invalid');});
     required().forEach(function(n){if(!val(n)) bad.push(n);});
     if(val('email') && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('email'))) bad.push('email');
-    bad.forEach(function(n){f.elements[n].setAttribute('aria-invalid','true');});
+    bad.forEach(function(n){field(n).setAttribute('aria-invalid','true');});
     if(!f.elements.consentement.checked) bad.push('consentement');
     return bad;
   }
   function payload(){
     var d={type:type()};
-    ['prenom','nom','societe','contact','email','telephone','objet','message','site_web','mat_type','mat_desc','mat_qte','mat_etat','mat_lieu'].forEach(function(n){d[n]=val(n);});
-    if(d.objet!==MAT){['mat_type','mat_desc','mat_qte','mat_etat','mat_lieu'].forEach(function(n){delete d[n];});}
+    var x=extra();
+    ['prenom','nom','societe','contact','email','telephone','objet','message','site_web'].concat(x?x.fields:[]).forEach(function(n){d[n]=val(n);});
     return d;
-  }
-  function mailtoLink(d){
-    var qui=d.type==='societe'?(d.societe+' ('+d.contact+')'):(d.prenom+' '+d.nom);
-    var mat=d.objet===MAT?('\n\nDon de matériel\nType : '+d.mat_type+'\nDescription : '+d.mat_desc+(d.mat_qte?'\nQuantité : '+d.mat_qte:'')+(d.mat_etat?'\nÉtat : '+d.mat_etat:'')+'\nLieu d\'enlèvement : '+d.mat_lieu):'';
-    var body='De : '+qui+'\nE-mail : '+d.email+(d.telephone?'\nTéléphone : '+d.telephone:'')+mat+(d.message?'\n\n'+d.message:'');
-    return 'mailto:contact@1001aides.org?subject='+encodeURIComponent('[Site] '+d.objet+' – '+qui)+'&body='+encodeURIComponent(body);
   }
   f.addEventListener('submit',function(ev){
     ev.preventDefault();
@@ -529,13 +577,12 @@
     fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
       .then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,status:r.status,j:j};});})
       .then(function(res){
-        if(res.ok){f.reset();toggle();toggleMat();setStatus('Merci ! Votre message a bien été envoyé. Nous vous répondrons rapidement.','ok');}
+        if(res.ok){f.reset();toggle();toggleExtra();setStatus('Merci ! Votre message a bien été envoyé. Nous vous répondrons rapidement.','ok');}
         else if(res.status===400){setStatus(res.j.error||'Certains champs sont invalides.','err');}
         else{throw new Error('indisponible');}
       })
       .catch(function(){
-        var a=mailtoLink(d);
-        setStatus('L\'envoi automatique n\'est pas disponible pour le moment. <a href="'+a+'">Cliquez ici pour envoyer votre message depuis votre messagerie</a> (il est déjà rempli).','err',true);
+        setStatus('L\'envoi n\'a pas abouti. Vos informations sont conservées : merci de réessayer dans quelques minutes.','err');
       })
       .finally(function(){btn.disabled=false;});
   });
